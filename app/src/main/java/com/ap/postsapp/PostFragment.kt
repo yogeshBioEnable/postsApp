@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ap.postsapp.App.PostsApp
 import com.ap.postsapp.adapters.PostAdapter
+import com.ap.postsapp.contract.IPostListClickListener
 import com.ap.postsapp.models.Posts
 import com.ap.postsapp.models.PostsItem
 import com.ap.postsapp.repositories.PostRepository
@@ -35,8 +36,14 @@ class PostFragment : Fragment() {
         val view: View =  inflater.inflate(R.layout.fragment_post, container, false)
 
         rvPosts = view.findViewById<RecyclerView>(R.id.rv_posts)
+
+        val listner = object: IPostListClickListener {
+            override fun onPostClick(view: View, postId: Int) {
+                findNavController().navigate(R.id.action_postFragment_to_commentsFragment)
+            }
+        }
+
         rvPosts.layoutManager = LinearLayoutManager(context)
-        
 
         postRepository = (requireActivity().application as? PostsApp)!!.postRepository
 
@@ -44,17 +51,10 @@ class PostFragment : Fragment() {
 
         postViewModel.posts.observe(this.viewLifecycleOwner, Observer{ posts: Posts ->
             val post1 = posts.get(0)
+
             Log.d("Post", "post1 = $post1 ")
-            rvPosts.adapter = PostAdapter(posts)
+            rvPosts.adapter = PostAdapter(posts, listner)
         })
-
-
-
-
-
-
-
-
 
         // TODO Show Posts in Recycler View here on PostsFragment
         // TODO - when clicked on post load comments related to that postId
@@ -68,7 +68,4 @@ class PostFragment : Fragment() {
         return view
     }
 
-    private fun populateSampleData() {
-
-    }
 }
