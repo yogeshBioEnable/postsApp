@@ -56,8 +56,7 @@ class PostFragment : Fragment() {
             rvPosts.adapter = PostAdapter(posts, listner)
         })
 
-        // TODO Show Posts in Recycler View here on PostsFragment
-        // TODO - when clicked on post load comments related to that postId
+
 
         // Navigation
 //        tvSample.setOnClickListener{

@@ -1,39 +1,32 @@
 package com.ap.postsapp.repositories
 
 import android.content.Context
-import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.ap.postsapp.contract.IViewImpl
 import com.ap.postsapp.api.ApiService
-import com.ap.postsapp.models.Posts
+import com.ap.postsapp.contract.IViewImpl
+import com.ap.postsapp.models.Comments
 import com.ap.postsapp.utils.NetworkUtils
+import java.util.logging.Handler
 
-class PostRepository(
+class CommentRepository(
     private val apiService: ApiService,
+    private val postId: Int,
     private val context: Context,
     private val view: IViewImpl
-
 ) {
+    private val commentsLiveData = MutableLiveData<Comments>()
+    private val handler = android.os.Handler(Looper.getMainLooper())
+    val comments: LiveData<Comments>
+        get() = commentsLiveData
 
-    private val postsLiveData = MutableLiveData<Posts>()
-    private val handler = Handler(Looper.getMainLooper())
-
-    val posts : LiveData<Posts>
-
-        get() = postsLiveData
-
-    // Create fun to call api
-    suspend fun getPosts() {
+    suspend fun getComments() {
         if(NetworkUtils.isInternetAvailable(context)) {
-            val result = apiService.getPosts()
-
+            val result = apiService.getComments(postId)
             if(result?.body() != null) {
-                // add to live data
-                postsLiveData.postValue(result.body())
+                commentsLiveData.postValue(result.body())
             }
-//            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
             handler.post {
                 view.showMessage("Successfully fetched data")
             }
@@ -49,9 +42,6 @@ class PostRepository(
 
 
         }
-
-
-
     }
 
 
