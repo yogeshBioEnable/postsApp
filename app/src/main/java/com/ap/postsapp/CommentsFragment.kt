@@ -29,7 +29,7 @@ class CommentsFragment : Fragment() {
         commentRepository = (requireActivity().application as? PostsApp)!!.commentRepository
 
 
-        commentViewModel = ViewModelProvider(this, CommentViewModelFactory(commentRepository)).get(CommentViewModel::class.java)
+        commentViewModel = ViewModelProvider(this, CommentViewModelFactory(commentRepository, 1)).get(CommentViewModel::class.java)
 
         commentViewModel.comments.observe(this.viewLifecycleOwner, Observer { comments: Comments ->
 

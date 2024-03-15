@@ -20,6 +20,6 @@ class PostsApp: Application() {
         val view = IViewImpl(applicationContext)
         val apiService = RetrofitInstance.getInstance().create(ApiService::class.java)
         postRepository = PostRepository(apiService, applicationContext, view)
-        commentRepository = CommentRepository(apiService, 1, applicationContext, view)
+        commentRepository = CommentRepository(apiService, applicationContext, view)
     }
 }

@@ -9,12 +9,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class CommentViewModel(
-    private val repository: CommentRepository
+    private val repository: CommentRepository,
+    private val postId: Int
 ): ViewModel() {
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getComments()
+            repository.getComments(postId)
         }
     }
 

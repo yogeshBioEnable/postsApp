@@ -12,7 +12,6 @@ import java.util.logging.Handler
 
 class CommentRepository(
     private val apiService: ApiService,
-    private val postId: Int,
     private val context: Context,
     private val view: IViewImpl
 ) {
@@ -21,7 +20,7 @@ class CommentRepository(
     val comments: LiveData<Comments>
         get() = commentsLiveData
 
-    suspend fun getComments() {
+    suspend fun getComments(postId: Int) {
         if(NetworkUtils.isInternetAvailable(context)) {
             val result = apiService.getComments(postId)
             if(result?.body() != null) {
