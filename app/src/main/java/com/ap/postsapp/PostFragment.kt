@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ap.postsapp.App.PostsApp
 import com.ap.postsapp.adapters.PostAdapter
 import com.ap.postsapp.contract.IPostListClickListener
+import com.ap.postsapp.databinding.FragmentPostBinding
 import com.ap.postsapp.models.Posts
-import com.ap.postsapp.models.PostsItem
 import com.ap.postsapp.repositories.PostRepository
 import com.ap.postsapp.viewmodels.PostViewModel
 import com.ap.postsapp.viewmodels.PostViewModelFactory
@@ -26,6 +26,12 @@ class PostFragment : Fragment() {
     lateinit var rvPosts: RecyclerView
     lateinit var postViewModel: PostViewModel
     lateinit var postRepository: PostRepository
+//    lateinit var binding: FragmentPostBinding
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
